@@ -7,25 +7,30 @@ namespace task1
     class functions{
         private List<ToDo> _todo {get;set;} = new List<ToDo>();
 
+
         //Update a particular task when you have completed it.
         private void updateTask(List<ToDo> ToDo,int index,string completed){
            for(var i=0;i<ToDo.Count;i++){
                if(index==i){
                    ToDo[index].Completed=completed;
-                   ToDo[index].GetDateTimeOfUpdated(1);
+                   ToDo[index].timeUpdated=DateTime.Now;
                    break;
                }
            }
         }
         //Show all the tasks 
         private void DisplayTodo(List<ToDo> ToDo){
-            for(var i=0;i<ToDo.Count;i++){
+            if(ToDo.Count==0){
+                Console.WriteLine("Nothing to display");
+            }else{
+                for(var i=0;i<ToDo.Count;i++){
                 if(ToDo[i].Completed=="Yes"){
-                    Console.WriteLine($"{i+1}. Task:{ToDo[i].Task},Completed:{ToDo[i].Completed},timeCreated:{ToDo[i].GetDateTimeOfCreated()}, timeUpdated:{ToDo[i].GetDateTimeOfUpdated(1)}");
-                }
-                else{
                     Console.WriteLine($"{i+1}. Task:{ToDo[i].Task},Completed:{ToDo[i].Completed},timeCreated:{ToDo[i].GetDateTimeOfCreated()}, timeUpdated:{ToDo[i].GetDateTimeOfUpdated()}");
                 }
+                else{
+                    Console.WriteLine($"{i+1}. Task:{ToDo[i].Task},Completed:{ToDo[i].Completed},timeCreated:{ToDo[i].GetDateTimeOfCreated()}, timeUpdated:");
+                }
+            }
             }
         }
         //Counts the number of tasks in your daily to do
@@ -38,6 +43,14 @@ namespace task1
             
         }
 
+        //Display options to the users
+        public void DisplayOptions(){
+                Console.WriteLine("1. Add a To Do ");
+                Console.WriteLine("2. Update a To Do");
+                Console.WriteLine("3. Display all your Tasks");
+                Console.WriteLine("4 Exit");
+        }
+        //Get the total number of tasks in the todo
         public int totalNumberOfTasks(){
             return TodoListCounts(_todo);
         }
